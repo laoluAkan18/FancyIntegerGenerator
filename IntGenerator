@@ -1,0 +1,73 @@
+package IntGenerator;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Scanner;
+
+
+public class IntGen {
+    private int arraySize; //user-defined
+
+
+    public IntGen(){
+        askUser();
+    }
+
+//method to accept user given input
+    private void askUser(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("How many numbers do you want to enter? ");
+        arraySize =input.nextInt();
+
+        System.out.println("Do you want to manually give these values? ");
+        System.out.println("(yes or no only)");
+
+        Scanner response = new Scanner(System.in);
+        String s= response.nextLine().toLowerCase(Locale.ROOT);
+
+        if (s.equals("yes")){
+            userGeneratedValues();
+        }
+        else if (s.equals("no")){
+            randomlyGeneratedValues();
+        }
+        else {
+            throw new RuntimeException("Invalid response, try again later!");
+        }
+        input.close();
+    }
+
+    private void randomlyGeneratedValues() {
+        Scanner bounds = new Scanner(System.in);
+        int size = arraySize;
+
+        System.out.println("Please give a min bound?");
+        int min = bounds.nextInt();
+        System.out.println("Please give a max bound?");
+        int max = bounds.nextInt();
+
+        for (int i = 0; i < size; i++) {
+            //int min = 0;
+            //int max = 10000000; //can also be hardcoded to give 0 to 10mil
+
+            int range = (max-min)+1;
+            System.out.println((int)(Math.random()*range)+ min); // upper-bound inclusive
+        }
+    }
+
+    private void userGeneratedValues() {
+        System.out.println("please input your desired figures: ");
+        Scanner userValues = new Scanner(System.in);
+        int[] ints = new int[arraySize];
+
+        for (int i = 0; i < ints.length; i++) {
+            ints[i] = userValues.nextInt();
+        }
+        userValues.close();
+        System.out.println("Your recorded values are: "+ Arrays.toString(ints)); //display values
+    }
+
+    public static void main(String[] args) {
+        IntGen i =new IntGen();
+    }
+}
